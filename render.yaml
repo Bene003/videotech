@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: fastlife-backend
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn app_fastlife.wsgi:application"
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: app_fastlife.settings
+      - key: SECRET_KEY
+        generateValue: true
+

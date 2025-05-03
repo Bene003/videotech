@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-hd-a_hoq^d2giiulohd!#gtz)6dw)%dk*gb_e%kyx_gk0o$3v#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.onrender.com']
 
 
 # Application definition
@@ -112,11 +112,42 @@ USE_I18N = True
 
 USE_TZ = True
 
+# ----------------- Sécurité production -----------------
+
+# Active protection contre attaques XSS
+SECURE_BROWSER_XSS_FILTER = True
+
+# Empêche l'exécution de contenu MIME douteux
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Cookies de session uniquement via HTTPS
+SESSION_COOKIE_SECURE = True
+
+# Protection des formulaires CSRF par HTTPS uniquement
+CSRF_COOKIE_SECURE = True
+
+# Empêche ton site d'être inclus dans un iframe (anti clickjacking)
+X_FRAME_OPTIONS = 'DENY'
+
+# Si tu as SSL (https), force la redirection vers https
+SECURE_SSL_REDIRECT = False  # <-- À mettre True quand tu as SSL (https)
+
+# HSTS (force navigateur à se connecter uniquement en https)
+SECURE_HSTS_SECONDS = 31536000  # 1 an
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+# Content Security Policy (CSP) - optionnel mais très puissant
+# (à ajouter plus tard avec django-csp si tu veux)
+
+# ----------------- Fin Sécurité -----------------
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
